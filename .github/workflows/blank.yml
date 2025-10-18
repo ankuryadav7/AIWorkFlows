@@ -21,7 +21,7 @@ jobs:
           echo "Sample build content" > build_output/build.txt
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: my-build
           path: build_output
