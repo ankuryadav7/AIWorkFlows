@@ -1,4 +1,4 @@
-name: Build and Upload Artifact
+name: Build and Upload APK
 
 on:
   push:
@@ -10,18 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Build project
-        run: |
-          # Your build commands here
-          echo "Build completed"
-          mkdir -p build_output
-          echo "Sample build content" > build_output/build.txt
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: gradle
 
-      - name: Upload build artifact
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: my-build
-          path: build_output
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/
