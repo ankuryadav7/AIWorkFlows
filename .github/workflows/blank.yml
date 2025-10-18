@@ -1,0 +1,27 @@
+name: Build and Upload Artifact
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build project
+        run: |
+          # Your build commands here
+          echo "Build completed"
+          mkdir -p build_output
+          echo "Sample build content" > build_output/build.txt
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: my-build
+          path: build_output
